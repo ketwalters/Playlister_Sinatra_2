@@ -8,11 +8,26 @@ require './lib/genre'
 class App
 
     attr_accessor :which_artist, :artists_total_songs, :artists_total_songs_display, :songs_display_genre 
-    :discography, :catalog,:which_genre
+    :discography, :catalog
 
     def initialize
       parser = Parser.new
       @catalog = parser.parse_songs
+      @artists_total_songs = 0 
+      @artists_total_songs_display = []
+      @songs_display_genre = []
+      @discography = {   #Tally of genres and songs 
+        "dance" => 0, 
+        "indie" => 0,
+        "folk" => 0,
+        "country" => 0,
+        "pop" => 0,
+        "hip-hop" => 0,
+        "rock" => 0,
+        "house" => 0,
+        "rap" => 0,
+        "electro" => 0
+      }
     end
 
   def pull_artist_songs(which_artist)
@@ -27,10 +42,10 @@ class App
           songs_display_genre << file[2]
         end
       end
-    display_artist_songs(which_artist, artists_total_songs, artists_total_songs_display, songs_display_genre)
+    display_artist_songs
   end
 
-  def display_artist_songs(which_artist, artists_total_songs, artists_total_songs_display, songs_display_genre)
+  def display_artist_songs
     puts which_artist + " - " + artists_total_songs.to_s + " Songs"
     artists_total_songs.times do | i |
       puts "#{i + 1}. " + artists_total_songs_display[i] + " - " + songs_display_genre[i].to_s.capitalize
