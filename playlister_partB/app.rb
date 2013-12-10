@@ -1,13 +1,11 @@
 require './parser'
-require 'debugger'
-require 'awesome_print'
 require './lib/artist'
 require './lib/song'
 require './lib/genre'
 
 class App
 
-    attr_accessor :which_artist, :artists_total_songs, :artists_total_songs_display, :songs_display_genre 
+    attr_accessor :which_artist, :artists_total_songs, :artists_total_songs_display, :songs_display_genre, 
     :discography, :catalog
 
     def initialize
@@ -46,9 +44,9 @@ class App
   end
 
   def display_artist_songs
-    puts which_artist + " - " + artists_total_songs.to_s + " Songs"
+     which_artist + " - " + artists_total_songs.to_s + " Songs"
     artists_total_songs.times do | i |
-      puts "#{i + 1}. " + artists_total_songs_display[i] + " - " + songs_display_genre[i].to_s.capitalize
+       "#{i + 1}. " + artists_total_songs_display[i] + " - " + songs_display_genre[i].to_s.capitalize
     end
   end
 

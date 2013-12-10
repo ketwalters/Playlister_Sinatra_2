@@ -1,3 +1,3 @@
-require './cli.rb'
+require './cli'
 
-run JukeBox::Playlister
+run Jukebox::Playlister

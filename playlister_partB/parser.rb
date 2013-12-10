@@ -1,4 +1,3 @@
-require 'awesome_print'
 require './lib/artist'
 require './lib/song'
 require './lib/genre'
