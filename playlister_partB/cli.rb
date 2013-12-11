@@ -10,8 +10,8 @@ module Jukebox
 	class Playlister < Sinatra::Application
 		
     get '/artists/:artist' do |a|
-			@artist_display == App.new.pull_artists_songs(a)
-			erb :artists_page
+			@artist_display = App.new(a)
+			erb :playlister
 		end
 
 	end

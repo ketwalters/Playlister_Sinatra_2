@@ -5,46 +5,40 @@ require './lib/genre'
 
 class App
 
-    attr_accessor :which_artist, :artists_total_songs, :artists_total_songs_display, :songs_display_genre, 
-    :discography, :catalog
+  attr_accessor :which_artist, :artists_total_songs, :artists_total_songs_display, :songs_display_genre, 
+      :discography, :catalog, :parser
 
-    def initialize
-      parser = Parser.new
-      @catalog = parser.parse_songs
-      @artists_total_songs = 0 
-      @artists_total_songs_display = []
-      @songs_display_genre = []
-      @discography = {   #Tally of genres and songs 
-        "dance" => 0, 
-        "indie" => 0,
-        "folk" => 0,
-        "country" => 0,
-        "pop" => 0,
-        "hip-hop" => 0,
-        "rock" => 0,
-        "house" => 0,
-        "rap" => 0,
-        "electro" => 0
-      }
-    end
+  def initialize(user_choice)
+    @parser = Parser.new
+    @catalog = parser.parse_songs 
+    @which_artist = user_choice
 
-  def pull_artist_songs(which_artist)
     #print out a list of songs and genres for that artist
-    artists_total_songs = 0  # keeps track of songs
-    artists_total_songs_display = [] # keeps track of song names 
-    songs_display_genre = [] #keeps track of song's genre
-      artist_song = catalog.collect do |file|  
+    @artists_total_songs = 0  # keeps track of songs
+    @artists_total_songs_display = [] # keeps track of song names 
+    @songs_display_genre = [] #keeps track of song's genre
+      @artist_song = catalog.collect do |file|  
         if file[0] == which_artist
           artists_total_songs += 1 
           artists_total_songs_display << file[1] 
           songs_display_genre << file[2]
         end
       end
+
+
+    
+    pull_artist_songs
+
     display_artist_songs
+
+  end
+
+  def pull_artist_songs
+
+    which_artist + " - " + artists_total_songs.to_s + " Songs"
   end
 
   def display_artist_songs
-     which_artist + " - " + artists_total_songs.to_s + " Songs"
     artists_total_songs.times do | i |
        "#{i + 1}. " + artists_total_songs_display[i] + " - " + songs_display_genre[i].to_s.capitalize
     end
