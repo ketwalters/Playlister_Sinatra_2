@@ -84,7 +84,7 @@ class App
     art_or_gen
   end
 
-end
+
 
 #Parser.new.parse
 #a = App.new

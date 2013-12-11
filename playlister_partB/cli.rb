@@ -9,7 +9,7 @@ require './parser'
 module Jukebox
 	class Playlister < Sinatra::Application
 		
-    get '/artists/:artist' do |a|
+    get '/artists' do |a|
 			@artist_display = App.new(a)
 			erb :playlister
 		end
