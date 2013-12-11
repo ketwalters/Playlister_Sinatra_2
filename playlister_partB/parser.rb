@@ -1,38 +1,34 @@
-require './lib/artist'
-require './lib/song'
-require './lib/genre'
+require "./lib/artist"
+require "./lib/song"
+require "./lib/genre"
 
-# artist = /((.*) (?=\-))/
-# song = /(?<=\-\s).*(?=\s\[)/
-# genre = /(?<=\[).*(?=\])/
-
-# our_artist = files[0].match(artist)
-# our_song = files[0].match(song)
-# our_genre = files[0].match(genre)
 class Parser
-  def initialize
+  attr_accessor :artists, :genres, :song
+  attr_reader :mp3
+
+
+  REGEX = /(?<artist>.*)\s\-\s(?<song>.*)\s\[(?<genre>.*)\]/
+
+
+  def initialize(directory="data")
+    @mp3 = Dir.entries(directory).select {|f| !File.directory? f}
   end
 
-  def parse_songs
-    files = Dir.entries('data').select { |f| !File.directory? f}
-    artist = /((.*) (?=\-))/
-    song = /(?<=\-\s).*(?=\s\[)/
-    genre = /(?<=\[).*(?=\])/
-    catalog = []
-    files.each do |item|
-      song_array = []
-      a = item.match(artist).to_s.strip
-      s = item.match(song).to_s
-      g = item.match(genre).to_s
-      song_array << a << s << g
-      catalog << song_array
+  def parse
+    @mp3.map do |file|
+      match = REGEX.match(file)
+
+      artist = Artist.find_by_name(match[:artist]) || Artist.new.tap {|artist| artist.name = match[:artist]}
+
+      song = Song.new
+      song.name = match[:song]
+      song.genre = Genre.find_by_name(match[:genre]) || Genre.new.tap {|genre| genre.name = match[:genre]}
+
+      #debugger
+      artist.add_song(song)
     end
-    catalog
   end
 
-
-  #  files = Dir.entries('data').select { |f| !File.directory? f}
-  # ap parse_songs(files)
 end
 
 

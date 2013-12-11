@@ -1,52 +1,37 @@
 
 class Genre
+  
+  attr_accessor :name, :songs
+  ALL = []
 
-
-  attr_accessor :name, :songs, :artists
-
-  GENRES = Array.new
-
-  def initialize #'The Genre class can keep track of all created genres'
-    GENRES << self
+  def initialize
+    @name = name
+    @songs = []
+    ALL << self
   end
 
-  def self.all #'The Genre class can keep track of all created genres' => Display 
-    GENRES
+  def artists
+    (songs.collect{|song| song.artist}).uniq
   end
 
-  def self.reset_genres #'The Genre class can be reset'
-    GENRES.clear
+  def self.reset_genres
+    ALL.clear
+  end
+  
+  def self.all
+    ALL
   end
 
-  def artists # 'A genres Artists are unique'
-    songs.map{|song| song.artist}.uniq #.uniq does not allow repeats 
+  def self.find_by_name(name)
+    ALL.detect{|g| g.name == name}
   end
 
-  def songs  # 'A genre has many songs'
-    @songs ||= Array.new #if no songs in the array, default to new array
-  end  #fresh genres get a new Array.
+  #def self.list #maybe an wrong
+  # ALL.each_with_index do |o, index|
+  #   puts "#{index+1}. #{o.name}"
+  # end
+  #end
 
 
-
-	
- #  attr_accessor :name, :songs, :artists #, :genre, 
- #  GENRES = []
-	
- #  def initialize(name="N/A") #genre=[], 
- #   @songs = []
- #   @name = name
- #   @artists = []
- #   GENRES << self
-	# end
-
- #  def self.reset_genres
- #    GENRES.clear
- #  end
-
- #  def self.all
- #    GENRES
- #  end
-
-	
 end
 
