@@ -6,22 +6,23 @@ require './lib/genre'
 class App
 
   attr_accessor :which_artist, :artists_total_songs, :artists_total_songs_display, :songs_display_genre, 
-      :discography, :catalog, :parser
+      :discography, :catalog, :parser, :artist_song
 
   def initialize(user_choice)
     @parser = Parser.new
     @catalog = parser.parse_songs 
     @which_artist = user_choice
 
+    #redo this method using .length
     #print out a list of songs and genres for that artist
     @artists_total_songs = 0  # keeps track of songs
     @artists_total_songs_display = [] # keeps track of song names 
     @songs_display_genre = [] #keeps track of song's genre
       @artist_song = catalog.collect do |file|  
         if file[0] == which_artist
-          artists_total_songs += 1 
-          artists_total_songs_display << file[1] 
-          songs_display_genre << file[2]
+          @artists_total_songs += 1 
+          @artists_total_songs_display << file[1] 
+          @songs_display_genre << file[2]
         end
       end
 
@@ -162,6 +163,10 @@ class App
       puts "Sorry I did not understand"
       browsing
     end
+  end
+
+  def test
+    catalog.inspect
   end
 
 end
